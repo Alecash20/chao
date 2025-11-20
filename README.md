@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AitanaGs23</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Oculta el scroll si los corazones se salen */
+            font-family: 'Arial', sans-serif;
+            background-color: #fce4ec; /* Fondo rosa claro */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative; /* Para posicionar los corazones */
+        }
+
+        .title-container {
+            position: relative;
+            z-index: 10; /* Asegura que el título esté por encima de los corazones */
+            text-align: center;
+            color: #e91e63; /* Color de texto rosa intenso */
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Contenedor para los corazones */
+        .heart-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Permite hacer clic a través de los corazones */
+            overflow: hidden;
+        }
+
+        /* Estilo de un corazón individual */
+        .heart {
+            position: absolute;
+            background-color: #ff69b4; /* Rosa fuerte */
+            width: 20px;
+            height: 20px;
+            transform: rotate(-45deg);
+            animation: floatHeart 10s infinite ease-in;
+            opacity: 0; /* Empiezan invisibles */
+            box-shadow: 0 0 8px rgba(255, 105, 180, 0.5);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff69b4;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        /* Animación de los corazones */
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(-45deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(-45deg) scale(1);
+            }
+            100% {
+                transform: translateY(-50vh) rotate(-45deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-container">
+        <h1>¡Te quiero mucho Aitana!</h1>
+    </div>
+
+    <div class="heart-container"></div>
+
+    <script>
+        const heartContainer = document.querySelector('.heart-container');
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+
+            // Posición inicial aleatoria en la parte inferior
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 5 + 5 + 's'; // Duración entre 5 y 10 segundos
+            heart.style.animationDelay = Math.random() * 5 + 's'; // Retraso para que no aparezcan todos a la vez
+
+            heartContainer.appendChild(heart);
+
+            // Eliminar el corazón después de que termine la animación para no sobrecargar el DOM
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        // Crear un número continuo de corazones
+        setInterval(createHeart, 300); // Crea un corazón cada 300 milisegundos
+    </script>
+
+</body>
+</html>
